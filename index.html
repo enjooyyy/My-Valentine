@@ -1,136 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Valentine</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Valentine</title>
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: pink;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
+<!-- Font (very close to devbies) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    .container {
-      text-align: center;
-      max-width: 90%;
-    }
+<style>
+  * {
+    box-sizing: border-box;
+  }
 
-    h1 {
-      font-size: 26px;
-    }
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+  }
 
-    input {
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: none;
-      margin-bottom: 15px;
-      width: 80%;
-      max-width: 250px;
-    }
+  .card {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 18px;
+    text-align: center;
+    width: 90%;
+    max-width: 350px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    animation: pop 0.6s ease;
+  }
 
-    button {
-      font-size: 18px;
-      padding: 10px 20px;
-      margin: 10px;
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
+  @keyframes pop {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
     }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
 
-    #yes {
-      background-color: #ff4d6d;
-      color: white;
-    }
+  h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
 
-    #no {
-      background-color: #555;
-      color: white;
-      position: relative;
-    }
+  input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 18px;
+    outline: none;
+  }
 
-    #message {
-      margin-top: 20px;
-      font-size: 22px;
-      font-weight: bold;
-    }
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+  }
 
-    @keyframes floatUp {
-      from {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-100vh);
-        opacity: 0;
-      }
+  button {
+    padding: 10px 22px;
+    font-size: 16px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  #yes {
+    background: #ff4d6d;
+    color: white;
+  }
+
+  #no {
+    background: #999;
+    color: white;
+    position: relative;
+  }
+
+  #message {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ff4d6d;
+  }
+
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 22px;
+    animation: floatUp 2.5s linear forwards;
+  }
+
+  @keyframes floatUp {
+    from {
+      transform: translateY(0) scale(1);
+      opacity: 1;
     }
-  </style>
+    to {
+      transform: translateY(-100vh) scale(1.5);
+      opacity: 0;
+    }
+  }
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <h1 id="question">Will you be my Valentine? 💖</h1>
 
-    <input
-      type="text"
-      id="valentineName"
-      placeholder="Enter your name 🥹🎀"
-    />
+<div class="card">
+  <h1 id="question">Will you be my Valentine? 💖</h1>
 
-    <br />
+  <input id="name" type="text" placeholder="Enter your name 🥹🎀">
 
+  <div class="buttons">
     <button id="yes">Yes 💘</button>
     <button id="no">No 💔</button>
-
-    <p id="message"></p>
   </div>
 
-  <script>
-    const yesBtn = document.getElementById("yes");
-    const noBtn = document.getElementById("no");
-    const message = document.getElementById("message");
-    const nameInput = document.getElementById("valentineName");
-    const question = document.getElementById("question");
+  <div id="message"></div>
+</div>
 
-    yesBtn.addEventListener("click", () => {
-      const name = nameInput.value.trim();
+<script>
+  const yesBtn = document.getElementById("yes");
+  const noBtn = document.getElementById("no");
+  const message = document.getElementById("message");
+  const nameInput = document.getElementById("name");
+  const question = document.getElementById("question");
 
-      if (name !== "") {
-        question.innerText = name + ", will you be my Valentine? 💖";
-      }
-
-      message.innerText = "u are soo sweet😭😭🎀";
-      createHearts();
-    });
-
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 200 - 100;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
-
-    function createHearts() {
-      for (let i = 0; i < 15; i++) {
-        const heart = document.createElement("div");
-        heart.innerText = "💖";
-        heart.style.position = "fixed";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.top = "100vh";
-        heart.style.fontSize = "24px";
-        heart.style.animation = "floatUp 2s ease-out";
-        document.body.appendChild(heart);
-
-        setTimeout(() => heart.remove(), 2000);
-      }
+  yesBtn.addEventListener("click", () => {
+    const name = nameInput.value.trim();
+    if (name) {
+      question.innerText = `${name}, will you be my Valentine? 💖`;
     }
-  </script>
+    message.innerText = "u are soo sweet😭😭🎀";
+    hearts();
+  });
+
+  noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * 250 - 125;
+    const y = Math.random() * 200 - 100;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+
+  function hearts() {
+    for (let i = 0; i < 18; i++) {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerText = "💖";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.animationDuration = 2 + Math.random() + "s";
+      document.body.appendChild(h);
+
+      setTimeout(() => h.remove(), 2500);
+    }
+  }
+</script>
+
 </body>
 </html>
